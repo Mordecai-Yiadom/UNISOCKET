@@ -14,7 +14,7 @@
         #pragma comment(lib, "ws2_32.lib") /* <- This has no effect when compiled with MinGW. Link with 'ws2_32.lib' if using MinGW*/
 
         //Windows Macros
-        #define UNISOCKET_WINDOWS //Easy way to check if what platform program is compiled on
+        #define UNISOCKET_WINDOWS //Easy way to check what platform program is compiled on
 
         #define ISVALIDSOCKET(s) (s != INVALID_SOCKET)
         #define GETSOCKETERRNO() WSAGetLastError()
@@ -32,7 +32,7 @@
         #include <errno.h>
 
         //Unix Macros
-        #define UNISOCKET_UNIX  //Easy way to check if what platform program is compiled on  
+        #define UNISOCKET_UNIX  //Easy way to check what platform program is compiled on  
 
         #define SOCKET int
         #define ISVALIDSOCKET(s) (s >= 0)
