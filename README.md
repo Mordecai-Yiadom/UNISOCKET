@@ -15,7 +15,7 @@ And that's it!
 
 ## Compiling
 
-**IMPORTANT NOTE**: Linking is only required if you are compiling on a Windows machine.
+**IMPORTANT NOTE**: Linking is only required if you are compiling on Windows.
 
 ### Microsoft Visual C/C++
 If you are using Microsoft Visual C/C++, there is not linking needed.
@@ -29,13 +29,13 @@ gcc source.c -o myProgram.exe -lws2_32
 
 ## Tutorial
 
-### Initalizing Unisocket
+### Initalizing UNISOCKET
 
 Initializing is only necessary if compiling on Windows, however for the sake of cross-platform compatablilty, it is best practice to do the following before using any socket functions:
 
 ```C
 //Must be called before any socket functions are called if on Windows
-UNICODE_STARTUP();
+UNISOCKET_STARTUP();
 ```
 This function macro encapsulates [`Winsock2`](https://learn.microsoft.com/en-us/windows/win32/winsock/windows-sockets-start-page-2)'s [`WSAStartUp()`](https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-wsastartup) .
 
@@ -47,13 +47,13 @@ If you wish to retain the [`WSADATA`](https://learn.microsoft.com/en-us/windows/
 #define UNISOCKET_RETURN_WSADATA
 #include "unisocket.h"
 ```
-And then pass in the address of you `WSADATA` struct
+And then pass in the address of your `WSADATA` struct
 ```C
 WSADATA data;
 UNISOCKET_STARTUP(&data);
 ```
 
-Both macros returns `0` on success. However `UNISOCKET_STARTUP(&data)` returns specific errors upon failing as documented in the [Winsock2 API](https://learn.microsoft.com/en-us/windows/win32/winsock/windows-sockets-start-page-2) .
+Both macros returns `0` on success. However `UNISOCKET_STARTUP(&data)` returns specific `int` errors upon failing as documented in the [Winsock2 API](https://learn.microsoft.com/en-us/windows/win32/winsock/windows-sockets-start-page-2) .
 
 ### Creating Sockets
 
