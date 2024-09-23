@@ -2,11 +2,11 @@
 
 A lightweight, single-header library that handles cross-platform (Windows, MacOS, Linux) *socket programming* in C.
 
-This API was inspired by [Hands-On Network Programming with C](https://www.amazon.com/Hands-Network-Programming-programming-optimized/dp/1789349869?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER) . This API uses `Winsock2` and `UNIX` sockets (Berkley Sockets); abstracting away their differences, while still retaining full functionality.
+This API was inspired by [Hands-On Network Programming with C](https://www.amazon.com/Hands-Network-Programming-programming-optimized/dp/1789349869?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER) . This API uses [`Winsock2`](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/) and [`UNIX`](https://man7.org/linux/man-pages/man0/sys_socket.h.0p.html) sockets (Berkley Sockets); abstracting away their differences, while still retaining full functionality.
 
 ## Include Headers
 
-To use the API include `unisocket.h`
+To use the API include [`unisocket.h`](include/unisocket.h)
 ```C
 #include "unisocket.h"
 ```
@@ -27,7 +27,7 @@ If you are using MinGW to compile, then you must link with `libws2_32.a`
 gcc source.c -o myProgram.exe -lws2_32
 ```
 
-## Tutorial
+## Tutorial: *How to Use UNISOCKET*
 
 ### Initalizing UNISOCKET
 
@@ -76,7 +76,42 @@ OR
 
 `socket >= 0` (UNIX).
 
-The `socket(), bind(), send/to(), recv/from() getaddrinfo(), connect(), accept()`, the `FD_SET` functions, and other socket functions are the same for both `Winsock2` and `UNIX` sockets.
+### Closing Sockets
+
+To close sockets, use the function macro shown below:
+```C
+CLOSESOCKET(socket);
+```
+
+If you want to control how a socket closes, you may want to use `shutdown()` defined in both [`Winsock2`](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-shutdown) and [`UNIX`](https://man7.org/linux/man-pages/man2/shutdown.2.html). The function macros that encapsulate them are listed below:
+```C
+//Closes socket from reciving packets
+SHUTDOWN_RD(socket);
+
+//Closes socket from sending packets
+SHUTDOWN_WR(socket);
+
+//Closes socket from reciving and sending packets
+SHUTDOWN_RDWR(socket);
+```
+You are highly encouraged to use the `SHUTDOWN_*()` function macros above for the sake of cross-platform compatibility. 
+
+### Querying the Operating System
+
+For your program to know what Operating System it is executing on during runtime, or even compile time, it is best to use the macros dynamically defined in `unisocket.h` as shown below:
+```C
+#ifdef UNISOCKET_WINDOWS
+    windowsRelatedFunction();
+#endif
+
+#ifdef UNISOCKET_UNIX
+    unixRelatedFunction();
+#endif    
+```
+`UNISOCKET_WINDOWS` is defined if the program is compiled in Windows
+
+`UNISOCKET_UNIX` is defined if a the program is compiled in UNIX (Linux, MacOS)
+
 
 ### Error Checking
 
@@ -85,3 +120,35 @@ To check for socket-related errors, use the function macro defined below:
 ```C
 int error = GETSOCKETERRNO();
 ```
+Because error codes are different per operating system, it is best to use `UNSOCKET_WINDOWS` or `UNISOCKET_UNIX` defined in `unisocket.h` to handle errors as shown below:
+```C
+#ifdef UNISOCKET_WINDOWS
+    handleWindowsErrors(error);
+#endif
+
+#ifdef UNISOCKET_UNIX
+    handleUnixErrors(error);
+#endif
+```
+
+### Terminating UNISOCKET
+
+Before exiting your program, it is best practice to call the function macro `UNISOCKET_CLEANUP()`, defined in `unisocket.h`. This encapsulates `Winsock2`'s [`WSACleanup()`](https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-wsacleanup).
+
+For the sake of cross-platform compatibility, it is best practice to use the following function macro when you are finished using sockets in your program:
+```C
+#include "unisocket.h"
+
+int main()
+{
+    UNISOCKET_STARTUP();
+    ...
+    /*Call when finished with socket operations, 
+    OR at the end of your program*/
+    UNISOCKET_CLEANUP();
+    return 0;
+}
+```
+`UNISOCK_CLEANUP()` returns `0` on success. For UNIX, this will always return `0`. 
+
+For Windows, `UNISOCK_CLEANUP()` returns some `int` called `SOCKET_ERROR` defined in `winsock2.h`. The error can be queried using the function macro `GETSOCKETERRNO()` defined in `unisocket.h`
