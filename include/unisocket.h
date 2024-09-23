@@ -3,10 +3,11 @@
 
     //WINDOWS COMPILATION
     #if defined(_WIN32)
-        //Windows 'Winsock2' configuration setup
+        //Windows 'winsock2.h' configuration
         #ifndef _WIN32_WINNT
-        #define _WIN32_WINNT 0x600
+            #define _WIN32_WINNT 0x600
         #endif
+        #define WIN32_LEAN_AND_MEAN
 
         //Windows Headers
         #include <winsock2.h>
