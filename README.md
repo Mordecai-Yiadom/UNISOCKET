@@ -1,8 +1,10 @@
 # UNISOCKET
 
-A lightweight, single-header library that handles cross-platform (Windows, MacOS, Linux) *socket programming* in C.
+A lightweight, convenient single-header library that handles cross-platform (Windows, MacOS, Linux) *socket programming* in C.
 
 This API was inspired by [Hands-On Network Programming with C](https://www.amazon.com/Hands-Network-Programming-programming-optimized/dp/1789349869?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER) . This API uses [`Winsock2`](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/) and [`UNIX`](https://man7.org/linux/man-pages/man0/sys_socket.h.0p.html) sockets (Berkley Sockets); abstracting away their differences, while still retaining full functionality.
+
+This library does NOT replace or modify functionality of the underlying APIs. It only conveniently abstracts away syntaxtic differences from them to produce write-once-run-everywhere source code.
 
 ## Include Headers
 
