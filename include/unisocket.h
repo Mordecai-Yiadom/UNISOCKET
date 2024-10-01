@@ -3,7 +3,7 @@
 
     //WINDOWS COMPILATION
     #if defined(_WIN32)
-    
+
         //Windows 'winsock2.h' configuration
         #ifndef _WIN32_WINNT
             #define _WIN32_WINNT 0x600
@@ -15,7 +15,7 @@
         #include <ws2tcpip.h>
 
         //Only available if compiling with MSVC
-        #ifdef _MSC_BUILD
+        #ifdef _MSC_VER
             #pragma comment(lib, "ws2_32.lib")
         #endif   
 
