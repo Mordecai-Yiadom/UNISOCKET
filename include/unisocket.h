@@ -30,14 +30,14 @@
         #ifdef UNISOCKET_RETURN_WSADATA
             #define UNISOCKET_STARTUP(wsaDataAddr) WSAStartup(MAKEWORD(2, 2), wsaDataAddr)
         #else
-            #define UNISOCKET_STARTUP() unisocket_WSAStartup()
+            #define UNISOCKET_STARTUP() UNISOCKET_WSAStartup()
         #endif
 
         //Windows Functions
 
         /*Encapsulates Winsock2's 'WSAStartup()'. Returns '0' in for unix systems. While this function is available to use directly, 
         it is best to use the 'UNISOCKET_STARTUP()' function macro instead. This is the default 'UNICODE_STARTUP()' function macro defined.*/
-        static inline int unisocket_WSAStartup(void)
+        static inline int UNISOCKET_WSAStartup(void)
         {
             WSADATA wsaData;
             return WSAStartup(MAKEWORD(2, 2), &wsaData);
