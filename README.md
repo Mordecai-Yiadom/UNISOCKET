@@ -15,19 +15,27 @@ To use the API include [`unisocket.h`](include/unisocket.h)
 And that's it!
 
 
-## Compiling
-
-**IMPORTANT NOTE**: Linking is only required if you are compiling on Windows.
+## Compiling on Windows
 
 ### Microsoft Visual C/C++
 If you are using Microsoft Visual C/C++, there is not linking needed.
 
-### MinGW
-If you are using MinGW to compile, then you must link with `libws2_32.a`
+
+### MinGW, Clang, LLVM
+If you are using anything else like MinGW to compile, then you must link with `libws2_32.a`
 
 ```powershell
 gcc source.c -o myProgram.exe -lws2_32
 ```
+
+## Compiling on Linux/MacOS
+
+There is no excplict linking needed. Simply compile.
+
+```powershell
+gcc source.c -o myProgram.exe
+```
+
 
 ## Tutorial: *How to Use UNISOCKET*
 
