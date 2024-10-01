@@ -3,6 +3,7 @@
 
     //WINDOWS COMPILATION
     #if defined(_WIN32)
+    
         //Windows 'winsock2.h' configuration
         #ifndef _WIN32_WINNT
             #define _WIN32_WINNT 0x600
@@ -36,7 +37,7 @@
         //Windows Functions
 
         /*Encapsulates Winsock2's 'WSAStartup()'. Returns '0' in for unix systems. While this function is available to use directly, 
-        it is best to use the 'UNISOCKET_STARTUP()' function macro instead. This is the default 'UNICODE_STARTUP()' function macro defined.*/
+        it is best to use the 'UNISOCKET_STARTUP()' function macro instead. This is the default 'UNISOCKET_STARTUP()' function macro defined.*/
         static inline int UNISOCKET_WSAStartup(void)
         {
             WSADATA wsaData;
