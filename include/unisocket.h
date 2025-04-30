@@ -104,8 +104,5 @@
 
     /*Abstracts 'shutdown()' for both Windows and Unix systems. It closes the passed socket for reading and writing. */
     #define SHUTDOWN_RDWR(s) shutdown(s, 2)
-
-    //Set for removal. Do not use.
-    #define SHUTDOWN(s, h) shutdown(s, h)
     
  #endif   
