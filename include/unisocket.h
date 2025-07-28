@@ -1,6 +1,11 @@
 #ifndef UNISOCKET_H
 #define UNISOCKET_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
     //WINDOWS COMPILATION
     #if defined(_WIN32)
 
@@ -104,5 +109,9 @@
 
     /*Abstracts 'shutdown()' for both Windows and Unix systems. It closes the passed socket for reading and writing. */
     #define SHUTDOWN_RDWR(s) shutdown(s, 2)
-    
- #endif   
+
+#ifdef __cplusplus
+    }
+#endif
+
+#endif   
